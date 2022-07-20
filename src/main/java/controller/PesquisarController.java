@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -8,6 +9,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import service.PesquisarService;
 
 @WebServlet("/pesquisarController")
 public class PesquisarController extends HttpServlet {
@@ -28,6 +31,10 @@ public class PesquisarController extends HttpServlet {
 		String palavra = request.getParameter("palavra");
 		
 		request.setAttribute("palavra", palavra);
+		
+		ArrayList<String> result = PesquisarService.crawl(0, "https://www.dicio.com.br/"+palavra, new ArrayList<String>());
+		request.setAttribute("result", result);
+		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("result.jsp");
 		dispatcher.forward(request, response);
 	}

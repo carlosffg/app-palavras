@@ -4,9 +4,10 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Resultado</title>
 </head>
 <body>
 	<% out.print(request.getAttribute("palavra")); %>
+	<% out.print(request.getAttribute("result")); %>
 </body>
 </html>
