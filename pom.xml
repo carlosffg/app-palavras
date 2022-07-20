@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>app-palavras</groupId>
   <artifactId>app-palavras</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>1.0</version>
   <packaging>war</packaging>
   <build>
     <plugins>
@@ -14,6 +14,26 @@
         <artifactId>maven-war-plugin</artifactId>
         <version>3.2.3</version>
       </plugin>
+      <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-dependency-plugin</artifactId>
+            <executions>
+                <execution>
+                    <phase>package</phase>
+                    <goals><goal>copy</goal></goals>
+                    <configuration>
+                        <artifactItems>
+                            <artifactItem>
+                                <groupId>com.heroku</groupId>
+                                <artifactId>webapp-runner</artifactId>
+                                <version>9.0.52.1</version>
+                                <destFileName>webapp-runner.jar</destFileName>
+                            </artifactItem>
+                        </artifactItems>
+                    </configuration>
+                </execution>
+            </executions>
+        </plugin>
     </plugins>
   </build>
   <dependencies>
