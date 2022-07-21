@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import model.Palavra;
 import service.PesquisarService;
 
 @WebServlet("/pesquisarController")
@@ -28,11 +29,16 @@ public class PesquisarController extends HttpServlet {
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String palavra = request.getParameter("palavra");
+		String p = request.getParameter("palavra");
 		
-		request.setAttribute("palavra", palavra);
+		Palavra palavra = new Palavra();
+		palavra.setPalavra(p);
+				
+		ArrayList<String> result = PesquisarService.crawl(0, "https://www.dicio.com.br/"+palavra.getPalavra(), new ArrayList<String>());
+				
+		palavra.salvar();
 		
-		ArrayList<String> result = PesquisarService.crawl(0, "https://www.dicio.com.br/"+palavra, new ArrayList<String>());
+		request.setAttribute("palavra", palavra.getPalavra());
 		request.setAttribute("result", result);
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("result.jsp");
