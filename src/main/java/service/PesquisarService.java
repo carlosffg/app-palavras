@@ -10,7 +10,7 @@ import org.jsoup.nodes.Element;
 
 public class PesquisarService {
 	
-	public static ArrayList<String> crawl(int level, String url, ArrayList<String> visited) {
+	public static Document crawl(int level, String url, ArrayList<String> visited) {
 		try {
 			Connection conn = Jsoup.connect(url);
 			Document doc = conn.get();
@@ -18,24 +18,8 @@ public class PesquisarService {
 			if(conn.response().statusCode() == 200) {
 				visited.add(url); 
 			}
-			
-			ArrayList<String> ps = new ArrayList<String>();
-			if(doc != null ) {
-				for(Element p : doc.select("p")) {
-					if(p.hasClass("adicional sinonimos")) {
-						ps.addAll(p.select("a").eachText());
-					}
-					
-				}
-				for(Element div : doc.select("div")) {
-					if(div.hasClass("palavras-relacionadas card")) {
-						ps.addAll(div.select("a").eachText());
-					}
-					
-				}
-			
-			}			
-			return ps;
+				
+			return doc;
 		} catch(IOException e) {
 			return null;
 		}
